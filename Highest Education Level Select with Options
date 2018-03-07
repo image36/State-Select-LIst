@@ -1,0 +1,10 @@
+<select id="" name="">
+    <option value="">Make a choice below....</option>
+    <option value="Less than High School">Less than High School</option>
+    <option value="High School or GED">High School or GED</option>
+    <option value="Associates Degree">Associates Degree</option>
+    <option value="Bachelors Degree">Bachelors Degree</option>
+    <option value="Masters Degree">Masters Degree</option>
+    <option value="Doctoral Degree">Doctoral Degree</option>
+    <option value="Other">Other</option>
+</select>
