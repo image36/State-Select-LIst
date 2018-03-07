@@ -1,0 +1,156 @@
+<form name="contact" id="contact" method="post" action="" autocomplete="on" class="" onsubmit="return validateFormOnSubmit(this)">
+  <div class="row half collapse-at-2">
+    <div class="6u">
+      <div id="divfullname" class="formAlert"></div>
+      <label for="fullname">Full Name *</label>
+      <input id="fullname" type="text" class="required" minlength="2" name="fullname" placeholder="Full Name">
+    </div>
+    <div class="6u">
+      <div id="divEmail" class="formAlert"></div>
+      <label for="email">E-mail *</label>
+      <input id="email" type="email" class="required" name="email" placeholder="name@domain.com" title="Enter Your Email Address">
+    </div>
+  </div>
+  <div class="row half">
+    <div class="12u">
+      <div id="divPhone" class="formAlert"></div>
+      <label for="phone">Phone *</label>
+      <input id="phone" type="tel" class="required" name="phone" placeholder="5555555555 enter number only" title="Enter Your Phone Number">
+    </div>
+  </div>
+  <div class="row half">
+    <div class="12u">
+      <div id="divMessage" class="formAlert"></div>
+      <label for="message">Question/Comment *</label>
+      <textarea name="message" id="feedback"class="required" minlenght="6"></textarea>
+    </div>
+  </div>
+  <div class="row half">
+    <div class="12u">
+      <div id="divButtonAlert" class="formAlert"></div>
+      <ul class="actions">
+        <li><a onclick="submitMyForm(this)" class="button alt2" id="contactSubmit">Send Message</a></li>
+      </ul>
+    </div>
+  </div>
+</form>
+/***********************************************************************************************************************************/
+
+                //Simple Validation Script For A Contact Form with 4 Inputs and a submit button
+                //Form Above
+                //form id and name is contact id and name for inputs are fullname, email, phone, message.
+                function submitMyForm()
+                {
+                var reason = "";
+                var contact = document.getElementById('contact');
+                reason += validateEmpty(contact.fullname);
+                reason += validateEmail(contact.email);
+                reason += validatePhone(contact.phone);
+                reason += validateMessage(contact.message);
+                //this checks to see if reason is not empty and if so will display a message above the button in the divButtonAlert
+                //
+                if (reason != "")
+                {
+                    document.getElementById('divButtonAlert').innerHTML = "Your request is missing something. Please fill in the highlighted fields.";
+                    return false;
+                }
+                //if there is no error the div will remain empty and the form will be submitted\
+                else
+                {
+                    document.getElementById('divButtonAlert').innerHTML = "";
+                }
+                document.getElementById('contact').submit();
+
+                }
+                //this function checks an input to ensure it is not empty
+                //you can change the value to a number other than zero to ensure it is at least that many characters
+                //if the input is found to be empty it will make the background yellow and display the error message in the div specified
+                function validateEmpty(fld)
+                {
+                var error = "";
+
+                if (fld.value.length == 0)
+                {
+                    fld.style.background = 'Yellow';
+                    error = "The required field has not been filled in.\n"
+                } 
+                else
+                {
+                    fld.style.background = 'White';
+                }
+                document.getElementById('divfullname').innerHTML = error;
+                return error;
+                }
+                //this function removes white space
+                function trim(s)
+                {
+                  return s.replace(/^\s+|\s+$/, '');
+                } 
+                //this function checks the field to ensure the format of input is an email
+                //if it validates false it will make the background yellow an display error message in the specified div
+                function validateEmail(fld) {
+                    var error="";
+                    var tfld = trim(fld.value);                        // value of field with whitespace trimmed off
+                    var emailFilter = /^[^@]+@[^@.]+\.[^@]*\w\w$/ ;
+                    var illegalChars= /[\(\)\<\>\,\;\:\\\"\[\]]/ ;
+    
+                    if (fld.value == "") {
+                        fld.style.background = 'Yellow';
+                        error = "You didn't enter an email address.\n";
+                    } else if (!emailFilter.test(tfld)) {              //test email for illegal characters
+                        fld.style.background = 'Yellow';
+                        error = "Please enter a valid email address.\n";
+                    } else if (fld.value.match(illegalChars)) {
+                        fld.style.background = 'Yellow';
+                        error = "The email address contains illegal characters.\n";
+                    } 
+                    else
+                    {
+                        fld.style.background = 'White';
+                    }
+                    document.getElementById('divEmail').innerHTML = error;
+                    return error;
+                }
+                //this function validates an input to ensure it is a phone number
+                //if it validates false it makes the background yellow and displays error message in the specified div
+                function validatePhone(fld) {
+                var error = "";
+                var stripped = fld.value.replace(/[\(\)\.\-\ ]/g, '');     
+
+               if (fld.value == "") {
+                    error = "You didn't enter a phone number.\n";
+                    fld.style.background = 'Yellow';
+                } else if (isNaN(parseInt(stripped))) {
+                    error = "The phone number contains illegal characters.\n";
+                    fld.style.background = 'Yellow';
+                } else if (!(stripped.length == 10)) {
+                    error = "The phone number is the wrong length. Make sure you included an area code.\n";
+                    fld.style.background = 'Yellow';
+                } 
+                else
+                {
+                    fld.style.background = 'White';
+                }
+                document.getElementById('divPhone').innerHTML = error;
+                return error;
+                }
+                //this function validates the textbox input to ensure a message of at least 6 characters is entered.
+                //TODO edit to have minimum and maximum characters
+                function validateMessage(fld)
+                {
+                var error = "";
+
+                if (fld.value.length < 6)
+                {
+                    fld.style.background = 'Yellow';
+                    error = "Your message must be at least 6 characters"
+                } 
+                else
+                {
+                    fld.style.background = 'White';
+                }
+                document.getElementById('divMessage').innerHTML = error;
+                return error;
+                }
+
+
